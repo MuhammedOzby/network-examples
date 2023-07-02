@@ -1,0 +1,42 @@
+configure terminal
+hostname main
+##############################################################################################################
+#SSH setup
+ip domain-name main
+crypto key generate rsa general-keys modulus 1024
+username gns3 password gns3
+ip ssh version 2
+line vty 0 4
+  transport input ssh
+  login local
+  exit
+##############################################################################################################
+# GNS3 NAT internet connection
+interface Ethernet0/0
+  ip address dhcp
+  ip nat outside
+  exit
+##############################################################################################################
+#AreaIT interface setup
+interface Ethernet1/2
+  description AreaIT
+  exit
+##############################################################################################################
+#AreaIT interface: management vlan setup
+interface Ethernet1/2.10
+  ip address 192.168.50.1 255.255.255.0
+  ip dhcp pool management
+  network 192.168.50.0 255.255.255.0
+  default-router 192.168.50.1
+  ip nat inside
+  exit
+##############################################################################################################
+#Cihazlarım için ilk 50 IP ve gateway rezerv tutulacak.
+ip dhcp excluded-address 192.168.50.1 192.168.50.50 
+##############################################################################################################
+#İnternete çıkış için izin verme
+ip access-list extended NAT-TRAFFIC
+  permit ip 192.168.50.0 0.0.0.255 any
+  exit
+ip nat inside source list NAT-TRAFFIC interface gigabitEthernet 0/0 overload
+##############################################################################################################
