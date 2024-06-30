@@ -32,6 +32,16 @@ Servers and IT computers for 192.168.0.0/16
   - VLAN 12
   - NAME SERVER-NODES
   - Network 192.168.12.0/23
+- Routers:
+  - AREA all Network: 192.168.0.0/24
+- Switches Office area:
+  - VLAN 128
+  - Name AREA-OFFICE-SW
+  - Network: 192.168.2.0/23
+- Switches Datacenter area:
+  - VLAN 128
+  - NAME AREA-DC-SW
+  - Network: 192.168.4.0/23
 
 ## Office Subnets:
 
