@@ -1,0 +1,10 @@
+name: kea-dhcp
+services:
+  kea:
+    build: .
+    ports:
+      - 67:67
+      - 68:68
+    volumes:
+      - ./kea:/etc/kea
+    command: kea-dhcp4 -c /etc/kea/kea-dhcp4.conf
