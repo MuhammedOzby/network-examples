@@ -28,8 +28,8 @@
             "data": "192.168.10.1"
           },
           {
-            "name": "domain-name",
-            "data": "examples.management"
+            "name": "domain-name-servers",
+            "data": "8.8.8.8"
           }
         ]
       },
@@ -47,8 +47,8 @@
             "data": "192.168.100.1"
           },
           {
-            "name": "domain-name",
-            "data": "examples.it-area"
+            "name": "domain-name-servers",
+            "data": "8.8.8.8"
           }
         ]
       },
@@ -66,8 +66,8 @@
             "data": "192.168.200.1"
           },
           {
-            "name": "domain-name",
-            "data": "examples.dc-pcs"
+            "name": "domain-name-servers",
+            "data": "8.8.8.8"
           }
         ]
       }
