@@ -1,51 +1,45 @@
 hostname R1
-# Eth1/0
-interface Eth1/0
+# Gi1
+interface Gi1
+  description internet
+  no shutdown
   ip address dhcp
   ip nat outside
-  no shutdown
   exit
-ip default-gateway 192.168.88.1
 ##############################################################################################################
-# Eth0/1
-interface Eth0/1
+# Gi3
+interface Gi3
   description offices
   no shutdown
   exit
-interface Eth0/1.100
+interface Gi3.100
   description it-area
-  ip address 192.168.100.1 255.255.255.0
   encapsulation dot1Q 100
+  ip address 192.168.100.1 255.255.255.0
   ip nat inside
   exit
-interface Eth0/1.200
+interface Gi3.200
   description dc-pcs
-  ip address 192.168.200.1 255.255.255.0
   encapsulation dot1Q 200
+  ip address 192.168.200.1 255.255.255.0
   ip nat inside
   exit
 ##############################################################################################################
-# Eth0/0
-interface Eth0/0
+# Gi2
+interface Gi2
   description management
   no shutdown
   exit
-interface Eth0/0.10
+interface Gi2.10
   description it-area
-  ip address 192.168.10.1 255.255.255.0
   encapsulation dot1Q 10
+  ip address 192.168.10.1 255.255.255.0
   ip nat inside
   exit
 ##############################################################################################################
 # İnternete çıkış için izin verme / deneme
-ip access-list extended NAT-TRAFFIC
-  permit ip 192.168.10.0 0.0.0.255 any
-  permit ip 192.168.100.0 0.0.0.255 any
-  permit ip 192.168.200.0 0.0.0.255 any
-  exit
-ip nat outside source list NAT-TRAFFIC interface Eth1/0 overload
-ip nat inside source list NAT-TRAFFIC interface Eth0/1 overload
-ip nat inside source list NAT-TRAFFIC interface Eth0/0 overload
-ip nat inside source list NAT-TRAFFIC interface Eth0/0.10 overload
-ip nat inside source list NAT-TRAFFIC interface Eth0/1.100 overload
-ip nat inside source list NAT-TRAFFIC interface Eth0/1.200 overload
+ip nat inside source list 1 interface gi1 overload
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.100.0 0.0.0.255
+access-list 1 permit 192.168.200.0 0.0.0.255
+exit
