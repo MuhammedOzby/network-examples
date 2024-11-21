@@ -16,12 +16,14 @@ interface Gi3.100
   description it-area
   encapsulation dot1Q 100
   ip address 192.168.100.1 255.255.255.0
+  ip helper-address 192.168.10.2
   ip nat inside
   exit
 interface Gi3.200
   description dc-pcs
   encapsulation dot1Q 200
   ip address 192.168.200.1 255.255.255.0
+  ip helper-address 192.168.10.2
   ip nat inside
   exit
 ##############################################################################################################
@@ -34,6 +36,7 @@ interface Gi2.10
   description it-area
   encapsulation dot1Q 10
   ip address 192.168.10.1 255.255.255.0
+  ip helper-address 192.168.10.2
   ip nat inside
   exit
 ##############################################################################################################
