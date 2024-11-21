@@ -1,0 +1,18 @@
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# DHCP config for ens4
+#auto ens4
+#iface ens4 inet dhcp
+
+# Static config for ens4
+auto ens4
+iface ens4 inet static
+  address 192.168.10.2
+  netmask 255.255.255.0
+  gateway 192.168.10.1
+  dns-nameservers 8.8.8.8
