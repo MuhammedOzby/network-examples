@@ -1,0 +1,39 @@
+hostname R1
+# Gi3
+interface Gi3
+  description internet
+  no shutdown
+  ip address dhcp
+  ip nat outside
+  exit
+##############################################################################################################
+# Gi2
+interface Gi2
+  description offices
+  no shutdown
+  exit
+interface Gi2.10
+  description it-area
+  encapsulation dot1Q 10
+  ip address 192.168.10.1 255.255.255.0
+  ip nat inside
+  exit
+interface Gi2.100
+  description it-area
+  encapsulation dot1Q 100
+  ip address 192.168.100.1 255.255.255.0
+  ip nat inside
+  exit
+interface Gi2.200
+  description dc-pcs
+  encapsulation dot1Q 200
+  ip address 192.168.200.1 255.255.255.0
+  ip nat inside
+  exit
+##############################################################################################################
+# İnternete çıkış için izin verme / deneme
+ip nat inside source list 1 interface Gi3 overload
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.100.0 0.0.0.255
+access-list 1 permit 192.168.200.0 0.0.0.255
+exit

@@ -1,0 +1,93 @@
+! ROUTER: R1
+enable
+  conf t
+    hostname R1
+    inter Gi0/0
+      ip address 192.168.1.1 255.255.255.0
+      no shut
+    inter Gi0/1
+      ip address 192.168.10.1 255.255.255.0
+      no shut
+      exit
+    router eigrp 1 
+      network 192.168.1.0 0.0.0.255
+      network 192.168.2.0 0.0.0.255
+      network 192.168.3.0 0.0.0.255
+      network 192.168.10.0 0.0.0.255
+      no auto-summary
+      end
+  wr
+! ROUTER: R2
+enable
+  conf t
+    hostname R2
+    inter Gi0/0
+      ip address 192.168.1.2 255.255.255.0
+      no shut
+    inter Gi0/1
+      ip address 192.168.2.1 255.255.255.0
+      no shut
+      exit
+    router eigrp 1 
+      network 192.168.1.0 0.0.0.255
+      network 192.168.2.0 0.0.0.255
+      network 192.168.3.0 0.0.0.255
+      network 192.168.10.0 0.0.0.255
+      no auto-summary
+      end
+  wr
+! ROUTER: R3
+enable
+  conf t
+    hostname R3
+    inter Gi0/0
+      ip address 192.168.3.1 255.255.255.0
+      no shut
+    inter Gi0/1
+      ip address 192.168.2.2 255.255.255.0
+      no shut
+      exit
+    router eigrp 1 
+      network 192.168.1.0 0.0.0.255
+      network 192.168.2.0 0.0.0.255
+      network 192.168.3.0 0.0.0.255
+      network 192.168.10.0 0.0.0.255
+      no auto-summary
+      end
+  wr
+! ROUTER: R4
+enable
+  conf t
+    hostname R4
+    inter Gi0/0
+      ip address 192.168.3.2 255.255.255.0
+      no shut
+    inter Gi0/1
+      ip address 192.168.11.2 255.255.255.0
+      no shut
+      exit
+    router eigrp 1 
+      network 192.168.1.0 0.0.0.255
+      network 192.168.2.0 0.0.0.255
+      network 192.168.3.0 0.0.0.255
+      network 192.168.10.0 0.0.0.255
+      no auto-summary
+      end
+  wr
+! ROUTER: R5
+enable
+  conf t
+    hostname R5
+    inter Gi0/0
+      ip address 192.168.11.1 255.255.255.0
+      no shut
+    inter Gi0/1
+      ip address 192.168.10.2 255.255.255.0
+      no shut
+      exit
+    router eigrp 1 
+      network 192.168.10.0 0.0.0.255
+      network 192.168.11.0 0.0.0.255
+      no auto-summary
+      end
+  wr
