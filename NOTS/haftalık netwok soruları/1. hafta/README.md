@@ -34,7 +34,7 @@ c. Fiziksel katmandaki değişimlere uyum sağlaması zaman almaktadır.
 
 **Diyelim ki bir switch'te access portlara portfast komutu giriyoruz. Bunu bütün portlara tek tek yazmasak da , global de bişey yazsak da bu iş olsa mesela.**
 
-Bunun bir çözümü default tanım girmektir. `spanning-tree portfast edge default` ile cihaz geneli bir ayar yapılabilir. Bu komutu kullanırken dikkatli olunmalı. Kullanmadan önce dökümandan nasıl çalıştığı ve etkileri incelenmelidir.
+Bunun bir çözümü default tanım girmektir. `spanning-tree portfast edge default` ile cihaz geneli bir ayar yapılabilir. Bu komutu kullanırken dikkatli olunmalı. Kullanmadan önce dökümandan nasıl çalıştığı ve etkileri incelenmelidir. Varyasyonlarından (edge, network, normal) uygun olan kullanılmalıdır. `edge` seçilmesinin nedeni ilgili cihazların uç noktaların bağlantısı için kullanılacak olmasındandır.
 
 ## LAB çıktısı
 
