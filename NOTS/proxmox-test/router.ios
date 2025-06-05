@@ -1,0 +1,48 @@
+! Fa0/0
+interface Fa0/0
+  description internet
+  no shutdown
+  ip address dhcp
+  ip nat outside
+  exit
+!##############################################################################################################
+! Fa0/1
+interface Fa0/1
+  description inter-netw
+  no shutdown
+  exit
+interface Fa0/1.100
+  description Virt-area
+  encapsulation dot1Q 100
+  ip address 192.168.100.1 255.255.255.0
+  ip nat inside
+  exit
+interface Fa0/1.200
+  description it-area
+  encapsulation dot1Q 200
+  ip address 192.168.200.1 255.255.255.0
+  ip nat inside
+  exit
+!##############################################################################################################
+! İnternete çıkış için izin verme / deneme
+ip nat inside source list 1 interface Fa0/0 overload
+access-list 1 permit 192.168.100.0 0.0.0.255
+access-list 1 permit 192.168.200.0 0.0.0.255
+! DHCP'den dağıtılmayacak adresleri belirleyelim (Router IP'leri)
+ip dhcp excluded-address 192.168.100.1
+ip dhcp excluded-address 192.168.200.1
+! İstersen başka IP veya aralıkları da ekleyebilirsin, örn: ip dhcp excluded-address 192.168.100.2 192.168.100.10
+
+! VLAN 100 için DHCP Havuzu
+ip dhcp pool VLAN100_POOL
+  network 192.168.100.0 255.255.255.0
+  default-router 192.168.100.1
+  dns-server 8.8.8.8 8.8.4.4 ! Google DNS, istersen farklı bir DNS sunucu adresi yazabilirsin
+  exit
+
+! VLAN 200 için DHCP Havuzu
+ip dhcp pool VLAN200_POOL
+  network 192.168.200.0 255.255.255.0
+  default-router 192.168.200.1
+  dns-server 8.8.8.8 8.8.4.4 ! Google DNS, istersen farklı bir DNS sunucu adresi yazabilirsin
+  exit
