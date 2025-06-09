@@ -27,8 +27,6 @@ interface Eth0/0
   desc R1
   switchport mode private-vlan host
   switchport private-vlan host-association 100 101
-  spanning-tree portfast
-  spanning-tree bpduguard enable
   no shutdown
   exit
 
@@ -36,8 +34,6 @@ interface Eth0/1
   desc R2
   switchport mode private-vlan host
   switchport private-vlan host-association 100 101
-  spanning-tree portfast
-  spanning-tree bpduguard enable
   no shutdown
   exit
 
@@ -46,8 +42,6 @@ interface Eth0/2
   desc R3
   switchport mode private-vlan host
   switchport private-vlan host-association 100 102
-  spanning-tree portfast
-  spanning-tree bpduguard enable
   no shutdown
   exit
 
@@ -55,8 +49,6 @@ interface Eth0/3
   desc R4
   switchport mode private-vlan host
   switchport private-vlan host-association 100 102
-  spanning-tree portfast
-  spanning-tree bpduguard enable
   no shutdown
   exit
 
@@ -65,8 +57,6 @@ interface Eth1/0
   desc R5
   switchport mode private-vlan promiscuous
   switchport private-vlan mapping 100 101,102
-  spanning-tree portfast
-  spanning-tree bpduguard enable
   no shutdown
   exit
 
