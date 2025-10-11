@@ -14,7 +14,7 @@ Yapılandırma, bir merkez (CORE-RTR) yönlendiricinin omurga alanını (Area 0)
 
 ```mermaid
 graph TD
-    subgraph Area 0 (Backbone)
+    subgraph "Area 0 (Backbone)"
         direction LR
         CORE_RTR[CORE-RTR]
         ABR1(IT-RTR)
@@ -28,19 +28,19 @@ graph TD
         CORE_RTR --- ABR4
     end
 
-    subgraph Area 1 (IT)
+    subgraph "Area 1 (IT)"
         ABR1 --- IT_Clients[fa:fa-desktop IT Clients]
     end
 
-    subgraph Area 2 (SALES)
+    subgraph "Area 2 (SALES)"
         ABR2 --- SALES_RTR2[SALES-RTR2] --- SALES_Clients[fa:fa-users Sales Clients]
     end
 
-    subgraph Area 3 (MANAGEMENT)
+    subgraph "Area 3 (MANAGEMENT)"
         ABR3 --- MGMT_Clients[fa:fa-user-tie Management]
     end
 
-    subgraph Area 4 (DC)
+    subgraph "Area 4 (DC)"
         ABR4 --- DC2_RTR[DC2-RTR] --- DC3_RTR[DC3-RTR] --- Servers[fa:fa-server Servers]
     end
 ```
