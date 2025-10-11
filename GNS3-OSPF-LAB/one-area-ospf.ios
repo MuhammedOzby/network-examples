@@ -1,0 +1,34 @@
+# ONE AREA OSPF
+# SIDE1 (10.0.1.1/32) <--> (10.0.1.0/32)CORE(10.0.2.0/32) <--> SIDE2(10.0.2.1/32)
+
+# CORE1
+configure terminal
+    interface Eth0/0
+        ip address 10.0.1.0 255.255.255.254
+        no shut
+        exit
+    interface Eth0/1
+        ip address 10.0.2.0 255.255.255.254
+        no shut
+        exit
+    
+    router ospf 1
+        network 10.0.0.0 0.0.3.255 area 0
+
+# SIDE1
+configure terminal
+    interface Eth0/0
+        ip address 10.0.1.1 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.3.255 area 0
+
+# SIDE2
+configure terminal
+    interface Eth0/0
+        ip address 10.0.2.1 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.3.255 area 0

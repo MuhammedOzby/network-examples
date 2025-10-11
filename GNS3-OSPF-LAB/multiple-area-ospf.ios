@@ -1,0 +1,143 @@
+! Multiple AREA OSPF
+!---------------------------------
+! OSPF BACKBONE (AREA-0) / 10.0.0.0/28 (255.255.255.240/0.0.0.15)
+! DC1-RTR(10.0.0.1) <--> (10.0.0.0)CORE-RTR
+! SALES-RTR1(10.0.0.3) <--> (10.0.0.2)CORE-RTR
+! IT-RTR(10.0.0.5) <--> (10.0.0.4)CORE-RTR
+! MGMT-RTR(10.0.0.7) <--> (10.0.0.6)CORE-RTR
+!---------------------------------
+! OSPF AREA IT (AREA-1)
+! IT-RTR
+!---------------------------------
+! OSPF AREA SALES (AREA-2) (10.0.0.32/28)
+! SALES-RTR1 <--> SALES-RTR2
+!---------------------------------
+! OSPF AREA MANAGEMENT (AREA-3)
+! MGMT-RTR
+!---------------------------------
+! OSPF AREA DC (AREA-4) (10.0.0.16/28)
+! DC1-RTR <--> DC2-RTR <--> DC3-RTR
+
+! CORE-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.0 255.255.255.254
+        no shut
+        exit
+    interface Eth0/1
+        ip address 10.0.0.2 255.255.255.254
+        no shut
+        exit
+    interface Eth0/2
+        ip address 10.0.0.4 255.255.255.254
+        no shut
+        exit
+    interface Eth0/3
+        ip address 10.0.0.6 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.0.15 area 0
+    end
+wr
+
+! DC1-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.1 255.255.255.254
+        no shut
+        exit
+    interface Eth0/1
+        ip address 10.0.0.16 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.0.15 area 0
+        network 10.0.0.16 0.0.0.15 area 4 ! DC area routers ips
+        network 172.16.1.0 0.0.15.255 area 4 ! DC subnet ips for servers
+    end
+wr
+
+! SALES-RTR1
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.3 255.255.255.254
+        no shut
+        exit
+    interface Eth0/1
+        ip address 10.0.0.32 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.0.15 area 0
+        network 10.0.0.32 0.0.0.15 area 2 ! SALES area routers ips
+        network 192.168.2.0 0.0.1.255 area 2! Sales department clients ips
+    end
+wr
+
+! IT-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.5 255.255.255.240
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.0.15 area 0
+        network 192.168.3.0 0.0.0.255 area 1! IT department client ips
+    end
+wr
+
+! MGMT-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.7 255.255.255.240
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.0 0.0.0.15 area 0
+        network 192.168.4.0 0.0.0.255 area 3 ! Managers computers ips
+    end
+wr
+
+!------------------- SUB-ROUTERS -------------------
+
+
+! SALES-RTR2
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.33 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.32 0.0.0.15 area 2 ! SALES area routers ips
+        network 192.168.2.0 0.0.1.255 area 2! Sales department clients ips
+    end
+wr
+
+! DC2-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.17 255.255.255.254
+        no shut
+        exit
+    interface Eth0/1
+        ip address 10.0.0.18 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.16 0.0.0.15 area 4 ! DC area routers ips
+        network 172.16.1.0 0.0.15.255 area 4 ! DC subnet ips for servers
+    end
+wr
+
+! DC3-RTR
+configure terminal
+    interface Eth0/0
+        ip address 10.0.0.19 255.255.255.254
+        no shut
+        exit
+    router ospf 1
+        network 10.0.0.16 0.0.0.15 area 4 ! DC area routers ips
+        network 172.16.1.0 0.0.15.255 area 4 ! DC subnet ips for servers
+    end
+wr
