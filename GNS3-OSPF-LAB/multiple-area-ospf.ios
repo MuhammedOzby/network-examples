@@ -19,6 +19,7 @@
 ! DC1-RTR <--> DC2-RTR <--> DC3-RTR
 
 ! TODO: You can open the port without router neigborhs. Also you will add `passive-interface <interface-name>`. Because router continue send **HELLO** packages.
+! TODO: The CORE-RTR in that examples has /31 subnets. You can change that for equal of /28 subnet and after that run like has priority. This can have DR/BDR with priorities. Because CORE router has all loads that way. we wanna all loads balancing to subrouters.
 
 ! CORE-RTR
 configure terminal
