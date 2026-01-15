@@ -1,0 +1,46 @@
+hostname TIRIVIRI
+
+! Uplink portları
+interface Port-channel1
+    description SW-UPLINK
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+
+interface range GigabitEthernet3/0 - 1
+    description SW-UPLINK
+    channel-group 1 mode passive
+
+! ------- Spesifik ayar notları:
+
+! Endpoint örnekleri
+
+interface GigabitEthernet0/0
+    description Server-A
+    switchport access vlan 100
+    switchport mode access
+    negotiation auto
+    spanning-tree portfast edge
+    spanning-tree bpduguard enable
+interface GigabitEthernet0/1
+    description Server-B
+    switchport mode access
+    switchport access vlan 100
+    negotiation auto
+    spanning-tree portfast edge
+    spanning-tree bpduguard enable
+
+
+interface GigabitEthernet0/0
+    description Server-A
+    switchport access vlan 20 ! Prod için not
+    switchport mode access
+    negotiation auto
+    spanning-tree portfast edge
+    spanning-tree bpduguard enable
+interface GigabitEthernet0/1
+    description Server-B
+    switchport mode access
+    switchport access vlan 20 ! Prod için not
+    negotiation auto
+    spanning-tree portfast edge
+    spanning-tree bpduguard enable

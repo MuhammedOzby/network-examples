@@ -1,0 +1,57 @@
+
+hostname CORE-SW
+
+! SSH için ayarlar
+username ansible privilege 15 secret CiscO123!
+line vty 0 4
+    login local
+    transport input ssh
+
+! Router: Little-One
+interface GigabitEthernet0/0
+    description Little-One-Uplink-VRRP-Main
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+interface GigabitEthernet0/1
+    description Little-One-Uplink-VRRP-Backup
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+! Management IP
+interface Vlan 100
+    ip address 192.168.156.10 255.255.255.128
+    no shutdown
+
+! SW-MANAGEMENT
+interface Port-channel1
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    switchport trunk allowed vlan 100,101
+    description SW-MANAGEMENT
+interface range GigabitEthernet1/0 - 1
+    description SW-MANAGEMENT
+    channel-group 1 mode active
+
+! SW-PRODUCTION
+interface Port-channel2
+    description SW-PRODUCTION
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    switchport trunk allowed vlan 100,20
+interface range GigabitEthernet1/2 - 3
+    description SW-PRODUCTION
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    negotiation auto
+    channel-group 2 mode active
+
+! SW-DEV
+interface Port-channel3
+    description SW-PRODUCTION
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+interface range GigabitEthernet2/0 - 1
+    description SW-PRODUCTION
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    negotiation auto
+    channel-group 3 mode active
