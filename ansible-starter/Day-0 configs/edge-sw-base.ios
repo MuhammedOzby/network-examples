@@ -33,7 +33,7 @@ interface GigabitEthernet0/1
 
 interface GigabitEthernet0/0
     description Server-A
-    switchport access vlan 20 ! Prod için not
+    switchport access vlan 20 
     switchport mode access
     negotiation auto
     spanning-tree portfast edge
@@ -41,7 +41,7 @@ interface GigabitEthernet0/0
 interface GigabitEthernet0/1
     description Server-B
     switchport mode access
-    switchport access vlan 20 ! Prod için not
+    switchport access vlan 20 
     negotiation auto
     spanning-tree portfast edge
     spanning-tree bpduguard enable
