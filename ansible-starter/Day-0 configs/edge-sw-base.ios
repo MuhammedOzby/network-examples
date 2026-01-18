@@ -8,6 +8,7 @@ interface Port-channel1
 
 interface range GigabitEthernet3/0 - 1
     description SW-UPLINK
+    switchport trunk encapsulation dot1q
     channel-group 1 mode passive
 
 ! ------- Spesifik ayar notları:
@@ -44,3 +45,34 @@ interface GigabitEthernet0/1
     negotiation auto
     spanning-tree portfast edge
     spanning-tree bpduguard enable
+
+
+! SW-MANAGEMENT
+ip ssh version 2
+username ansible privilege 15 secret CiscO123!
+line vty 0 4
+    login local
+    transport input ssh
+interface Vlan 100
+    ip address 192.168.156.12 255.255.255.128
+    no shutdown
+
+! SW-PRODUCTION
+ip ssh version 2
+username ansible privilege 15 secret CiscO123!
+line vty 0 4
+    login local
+    transport input ssh
+interface Vlan 100
+    ip address 192.168.156.11 255.255.255.128
+    no shutdown
+
+! SW-DEV
+ip ssh version 2
+username ansible privilege 15 secret CiscO123!
+line vty 0 4
+    login local
+    transport input ssh
+interface Vlan 100
+    ip address 192.168.156.13 255.255.255.128
+    no shutdown

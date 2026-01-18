@@ -2,7 +2,16 @@ hostname Little-One
 
 ! Prod ACL
 access-list 1 permit 192.168.100.0 0.0.0.255
-ip nat inside source list 1 interface GigabitEthernet0/1 overload
+access-list 1 permit 192.168.156.0 0.0.0.255
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
+
+! NAT GW default route
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0 192.168.122.1
+
+! NAT bacagi
+interface GigabitEthernet0/0
+ ip address dhcp
+ ip nat outside
 
 ! Core-SW link - 0 - Main
 interface GigabitEthernet0/2
@@ -10,6 +19,7 @@ interface GigabitEthernet0/2
 ! Network Managment Ana Gateway
 interface GigabitEthernet0/2.100
     encapsulation dot1Q 100
+    ip nat inside
     ip address 192.168.156.2 255.255.255.128
     vrrp 100 ip 192.168.156.1
     vrrp 100 priority 110
@@ -17,6 +27,7 @@ interface GigabitEthernet0/2.100
 ! Server Managment Ana Gateway
 interface GigabitEthernet0/2.101
     encapsulation dot1Q 101
+    ip nat inside
     ip address 192.168.156.130 255.255.255.128
     vrrp 101 ip 192.168.156.129
     vrrp 101 priority 110
@@ -25,7 +36,7 @@ interface GigabitEthernet0/2.101
 interface GigabitEthernet0/2.20
     encapsulation dot1Q 20
     ip nat inside
-    ip address 192.168.100.2 255.255.255.128
+    ip address 192.168.100.2 255.255.255.0
     vrrp 20 ip 192.168.100.1
     vrrp 20 priority 110
     vrrp 20 description PRODUCTION_ANA_GW
@@ -34,13 +45,15 @@ interface GigabitEthernet0/2.20
 ! Network Managment Yedek Gateway
 interface GigabitEthernet0/3.100
     encapsulation dot1Q 100
-    ip address 192.168.156.3 255.255.255.0
+    ip nat inside
+    ip address 192.168.156.3 255.255.255.128
     vrrp 100 ip 192.168.156.1
     vrrp 100 description NET_MANAGEMENT_YDK_GW
 ! Server Managment Yedek Gateway
 interface GigabitEthernet0/3.101
     encapsulation dot1Q 101
-    ip address 192.168.156.131 255.255.255.0
+    ip nat inside
+    ip address 192.168.156.131 255.255.255.128
     vrrp 101 ip 192.168.156.129
     vrrp 101 description SRV_MANAGEMENT_YDK_GW
 ! Prod Managment Yedek Gateway
