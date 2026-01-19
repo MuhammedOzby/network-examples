@@ -19,4 +19,46 @@ Proje, Cisco IOS tabanlı bir laboratuvar ortamında; yedekli bir ağ altyapıs�
 ├── hosts.ini               # Cihaz envanteri ve bağlantı değişkenleri
 ├── ansible.cfg             # Ansible çalışma ayarları
 └── command-ref.sh          # Kurulum ve çalıştırma için komut referansları
+
 ```
+
+## 🚀 Başlangıç
+
+### Gereksinimler
+
+Projenin çalışması için sisteminizde aşağıdaki bileşenlerin yüklü olması gerekir:
+
+* Python 3.x
+* Ansible
+* Cisco.IOS Collection
+
+### Kurulum
+
+Gerekli bağımlılıkları yüklemek için:
+
+```bash
+python3 -m pip install paramiko ansible-pylibssh
+ansible-galaxy collection install cisco.ios
+
+```
+
+### Playbook'u Çalıştırma
+
+Uç cihazların port yapılandırmasını başlatmak için aşağıdaki komutu kullanabilirsiniz:
+
+```bash
+ansible-playbook -i hosts.ini playbooks/endpoint-interface-set.yaml
+
+```
+
+## 📈 Öğrenme Notları
+
+Bu proje, manuel konfigürasyonun karmaşıklığını ve otomasyonun sağladığı standartlaşmayı anlamak için geliştirilmiştir.
+
+* **Endpoint Yapılandırması:** `ios_l2_interfaces` modülü ile port bazlı ayarların nasıl yönetildiği tecrübe edilmiştir.
+* **Bağlantı Ayarları:** Eski nesil cihazlarla uyumluluk için özel SSH anahtarları ve algoritmaları (`ssh_config`) projeye dahil edilmiştir.
+
+## ⚠️ Not
+
+Bu bir eğitim/öğrenme projesidir. Gerçek (Production) ortamlar için ek güvenlik önlemleri (Ansible Vault vb.) alınması önerilir.
+
